@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,13 +42,17 @@
     async function run() {
       appendStatus('Processing OIDC redirect...')
       const url = new URL(window.location.href)
+      console.log('Current URL:', url.href)
       const redirectUri = `${url.origin}${url.pathname}`
       const paramStr = extractParamString(url)
+      console.log('Extracted parameters:', paramStr)
       if (!paramStr) {
         appendError('No parameters found in the URL.')
         return
       }
       const response = await handleRedirectAndParameters(redirectUri, paramStr, init.env.clientId)
+      dbg('exchange response:', response)
+      console.log('Response from handleRedirectAndParameters:', response)
       if (response.success) {
         window.close()
       } else {

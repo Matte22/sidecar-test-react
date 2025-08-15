@@ -1,22 +1,51 @@
-import { create } from 'zustand'
 
-// add these optional fields so TS is happy
+
+// import { create } from "zustand"
+
+// export type NoTokenMessage = {
+//   type: "noToken"
+//   reason?: string
+//   [k: string]: any
+// } | null
+
+// export type AuthState = {
+//   noTokenMessage: NoTokenMessage
+//   setNoTokenMessage: (msg: NoTokenMessage) => void
+//   clearNoTokenMessage: () => void
+// }
+
+// export const useAuthStore = create<AuthState>((set) => ({
+//   noTokenMessage: null,
+//   setNoTokenMessage: (msg) => set({ noTokenMessage: msg }),
+//   clearNoTokenMessage: () => set({ noTokenMessage: null }),
+// }))
+
+import { create } from "zustand"
+
 export type NoTokenMessage = {
-  type: 'noToken'
+  type: "noToken"
   reason?: string
-  redirect?: string
-  codeVerifier?: string
-  state?: string
-  [k: string]: unknown
-}
+  [k: string]: any
+} | null
 
+export type ReauthPlan = { redirect: string; codeVerifier: string; state: string } | null
 
-type AuthState = {
-  noTokenMessage: NoTokenMessage | null
-  setNoTokenMessage: (msg: NoTokenMessage | null) => void
+export type AuthState = {
+  noTokenMessage: NoTokenMessage
+  setNoTokenMessage: (msg: NoTokenMessage) => void
+  clearNoTokenMessage: () => void
+
+  reauthPlan: ReauthPlan
+  setReauthPlan: (plan: ReauthPlan) => void
+  clearReauthPlan: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   noTokenMessage: null,
   setNoTokenMessage: (msg) => set({ noTokenMessage: msg }),
+  clearNoTokenMessage: () => set({ noTokenMessage: null }),
+
+  reauthPlan: null,
+  setReauthPlan: (plan) => set({ reauthPlan: plan }),
+  clearReauthPlan: () => set({ reauthPlan: null }),
 }))

@@ -225,6 +225,7 @@ async function fetchOpenIdConfiguration() {
 }
 
 async function createAuthorization(_redirectUri = redirectUri) {
+  
   if (authorizations[_redirectUri]) return authorizations[_redirectUri]
   const pkce = await getPkce()
   const state = crypto.randomUUID()

@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
-
+    "checkJs": false,
+    "allowJs": true,
     "types": ["vitest/globals", "vite/client", "node", "@testing-library/jest-dom"],
 
     "baseUrl": ".",

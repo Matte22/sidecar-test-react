@@ -1,5 +1,13 @@
+import React from "react"
+import TokenCard from './auth/TokenCard'
+import type { OidcWorkerClient } from "./auth/setupOidcWorker"
+import { ReauthPrompt } from "./auth/ReauthPrompt"
 
-import AuthDemo from './auth/AuthDemo.js';
-export default function Home() {
-  return <AuthDemo />;
+export default function App({ oidcWorker }: { oidcWorker?: OidcWorkerClient }) {
+  return (
+    <div className="p-6">
+      <TokenCard oidcWorker={oidcWorker} />
+       <ReauthPrompt oidcWorker={oidcWorker} />
+    </div>
+  )
 }
