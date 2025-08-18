@@ -1,6 +1,6 @@
 
 import { setupOidcWorker, type OidcWorkerClient } from "./setupOidcWorker"
-import { useAuthStore } from "../state/authStore" // <-- adjust to your actual path
+import { useAuthStore } from "../state/authStore"
 
 export type BootResult = {
   success: boolean

@@ -25,7 +25,7 @@ export type OAuthEnv = {
 export const OAUTH_ENV: OAuthEnv = {
   authority: import.meta.env.VITE_OAUTH_AUTHORITY || 'http://localhost:8080/realms/stigman',
   clientId: import.meta.env.VITE_OAUTH_CLIENT_ID || 'stig-manager',
-  responseMode: (import.meta.env.VITE_OAUTH_RESPONSE_MODE as 'query'|'fragment') || 'fragment',
+  responseMode: (import.meta.env.VITE_OAUTH_RESPONSE_MODE as 'query'|'fragment') || 'query',
 
   scopePrefix: import.meta.env.VITE_OAUTH_SCOPE_PREFIX || '',
   extraScopes: import.meta.env.VITE_OAUTH_EXTRA_SCOPES || '',

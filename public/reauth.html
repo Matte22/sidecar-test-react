@@ -51,7 +51,6 @@
         return
       }
       const response = await handleRedirectAndParameters(redirectUri, paramStr, init.env.clientId)
-      dbg('exchange response:', response)
       console.log('Response from handleRedirectAndParameters:', response)
       if (response.success) {
         window.close()

@@ -5,13 +5,13 @@ export const useCollections = () => {
   return useQuery({
     queryKey: ['collections'],
     queryFn: async () => {
-      console.log('🔄 Fetching collections...')
+      console.log('Fetching collections...')
       try {
         const result = await collectionsApi.getAll()
-        console.log('✅ Collections fetched successfully:', result)
+        console.log(' Collections fetched successfully:', result)
         return result
       } catch (error) {
-        console.error('❌ Error fetching collections:', error)
+        console.error('Error fetching collections:', error)
         throw error
       }
     },
