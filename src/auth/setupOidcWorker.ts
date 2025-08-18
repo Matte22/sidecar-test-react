@@ -1,4 +1,6 @@
 
+import { useAuthStore } from "../state/authStore"
+
 export type OidcWorkerClient = {
   worker: SharedWorker
   bc: BroadcastChannel
@@ -39,6 +41,7 @@ export function setupOidcWorker(): OidcWorkerClient {
       if (response?.success) {
         this.token = null
         this.tokenParsed = null
+        useAuthStore.getState().setAccessToken(null)
         if (response.redirect) window.location.href = response.redirect
       }
     },
@@ -51,9 +54,11 @@ export function setupOidcWorker(): OidcWorkerClient {
     if (data?.type === "accessToken") {
       OW.token = data.accessToken
       OW.tokenParsed = data.accessTokenPayload
+      useAuthStore.getState().setAccessToken(data.accessToken)
     } else if (data?.type === "noToken") {
       OW.token = null
       OW.tokenParsed = null
+      useAuthStore.getState().setAccessToken(null)
     }
   }
 

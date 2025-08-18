@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Testing
 - Unit tests use Vitest + Testing Library + jsdom
+- Test setup file: `vitest.setup.ts` with globals enabled (no need to import it/expect)
 - E2E tests use Playwright (in `tests/playwrite/`)
 - MSW (Mock Service Worker) handles API mocking during development and testing
 
@@ -21,26 +22,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a React + TypeScript + Vite application using a **feature-first structure** (vertical slices). Each feature contains its own UI components, data hooks, API calls, state, mocks, and tests in a single folder.
 
+**Important**: The application currently has OIDC authentication integration and is not using the standard MSW + React Query setup described below. The main entry point is configured for OIDC bootstrap in `src/main.tsx`.
+
 ### Key Technologies
 - **React Router** for routing
 - **TanStack Query** (`@tanstack/react-query`) for server state management and data fetching
 - **Zustand** for client-side state (minimal usage)
 - **Axios** for API calls (configured instance at `src/api/client.ts`)
 - **MSW** for API mocking in development
+- **OIDC authentication** with custom worker setup
 
 ### Project Structure
 ```
 src/
-├── main.tsx              # Entry point with MSW setup for dev
+├── main.tsx              # Entry point with OIDC bootstrap
 ├── App.tsx               # Root layout with navigation
 ├── router.tsx            # React Router configuration
+├── auth/                 # OIDC authentication setup
+│   ├── bootstrap.ts      # Authentication bootstrap logic
+│   ├── setupOidcWorker.ts
+│   ├── ReauthPrompt.tsx
+│   └── TokenCard.tsx
 ├── api/client.ts         # Axios instance with baseURL config
-├── features/             # Feature-first organization (empty currently)
+├── features/             # Feature-first organization
+│   ├── CollectionTable/  # Example feature with full structure
+│   └── orders-table/     # Another feature example
 ├── pages/                # Route components that compose features
 ├── mocks/                # MSW configuration
 │   ├── browser.ts        # MSW browser worker setup
 │   └── handlers.ts       # Aggregated API handlers
-├── state/ui.ts           # App-wide Zustand stores
+├── state/                # App-wide Zustand stores
+│   ├── ui.ts
+│   └── authStore.ts      # Authentication state
+├── lib/axios.ts          # Additional Axios configuration
+├── env.ts                # Environment configuration
 └── styles.css            # Global styles
 ```
 
@@ -80,4 +95,12 @@ src/features/feature-name/
 - Feature-specific handlers should be created in feature folders and imported into the main handlers file
 
 ### Import Conventions
-The project appears to use `@/` path alias for absolute imports (referenced in mocks), though the TSConfig setup uses workspace references between `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.node.json`.
+- The project uses `@/` path alias for absolute imports (configured in `vite.config.ts` and `vitest.config.ts`)
+- Example: `import { something } from '@/features/orders-table'`
+
+### Authentication
+- Uses OIDC (OpenID Connect) for authentication
+- Bootstrap process in `src/auth/bootstrap.ts` initializes auth before React app
+- OIDC worker handles token management via broadcast channel
+- Auth state managed via Zustand in `src/state/authStore.ts`
+- Environment configuration in `src/env.ts` sets up OAuth globals

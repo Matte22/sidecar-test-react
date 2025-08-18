@@ -38,6 +38,9 @@ export type AuthState = {
   reauthPlan: ReauthPlan
   setReauthPlan: (plan: ReauthPlan) => void
   clearReauthPlan: () => void
+
+  accessToken: string | null
+  setAccessToken: (token: string | null) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -48,4 +51,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   reauthPlan: null,
   setReauthPlan: (plan) => set({ reauthPlan: plan }),
   clearReauthPlan: () => set({ reauthPlan: null }),
+
+  accessToken: null,
+  setAccessToken: (token) => set({ accessToken: token }),
 }))

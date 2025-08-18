@@ -17,9 +17,11 @@ export async function bootstrap(): Promise<BootResult> {
   OW.bc.addEventListener("message", (event: MessageEvent) => {
     const data: any = (event as any).data
     if (data?.type === "noToken") {
-      useAuthStore.getState().setNoTokenMessage(data) 
+      useAuthStore.getState().setNoTokenMessage(data)
+      useAuthStore.getState().setAccessToken(null)
     } else if (data?.type === "accessToken") {
       useAuthStore.getState().clearNoTokenMessage()
+      useAuthStore.getState().setAccessToken(data.accessToken)
     }
   })
 
@@ -67,6 +69,7 @@ async function handleNoParameters(OW: OidcWorkerClient) {
   if (response?.accessToken) {
     OW.token = response.accessToken
     OW.tokenParsed = response.accessTokenPayload
+    useAuthStore.getState().setAccessToken(response.accessToken)
     return true
   } else if (response?.redirect) {
     localStorage.setItem("reauth-codeVerifier", response.codeVerifier)
@@ -108,6 +111,7 @@ async function handleRedirectAndParameters(
   if (response?.success) {
     OW.token = response.accessToken
     OW.tokenParsed = response.accessTokenPayload
+    useAuthStore.getState().setAccessToken(response.accessToken)
     window.history.replaceState(window.history.state, "", redirectUri)
     localStorage.removeItem("reauth-codeVerifier")
     localStorage.removeItem("reauth-oidcState")
