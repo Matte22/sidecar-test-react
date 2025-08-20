@@ -1,4 +1,90 @@
-:root { color-scheme: light dark; }
-body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu; }
-a { text-decoration: none; }
-nav a.active { text-decoration: underline; }
+:root{
+  --bg: #0f1724; /* dark navy */
+  --panel: #0b1220;
+  --muted: #94a3b8;
+  --brand: #6c8cff;
+  --accent: #7c86ff;
+  --glass: rgba(255,255,255,0.04);
+  --surface: #071026;
+  --card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --radius: 12px;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%;}
+body{
+  margin:0;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(124,134,255,0.07), transparent), var(--bg);
+  color: #e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* App layout */
+.app-root{display:flex;flex-direction:column;height:100vh;}
+.app-header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);}
+.app-header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:36px;height:36px}
+.brand-title{font-size:18px;margin:0;font-weight:600;letter-spacing:0.2px}
+.header-actions{display:flex;gap:12px;align-items:center}
+
+.app-main{flex:1;display:flex;min-height:0}
+.app-sidebar{width:300px;min-width:220px;background:var(--panel);border-right:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column}
+.sidebar-header{padding:18px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.sidebar-header h2{margin:0;font-size:14px;color:var(--muted)}
+.sidebar-body{padding:12px;overflow:auto}
+
+.app-content{flex:1;overflow:auto;background:linear-gradient(180deg, rgba(255,255,255,0.006), transparent);}
+.content-inner{max-width:1200px;margin:20px auto;padding:20px;border-radius:var(--radius);background:var(--card);box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+
+/* Utility components */
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:10px}
+
+/* Buttons fallback styling for TokenCard/ReauthPrompt if they rely on plain buttons */
+button{background:linear-gradient(180deg,var(--brand),var(--accent));border:none;color:white;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
+button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+/* TokenCard smaller action buttons */
+.token-actions{display:flex;gap:8px;align-items:center}
+.token-btn{padding:6px 8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600;font-size:13px;min-width:64px}
+.token-btn:disabled{opacity:0.45;cursor:not-allowed}
+
+/* DataTable paginator: make controls smaller and add spacing */
+.p-datatable .p-paginator{padding:0.5rem 0.75rem;display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.p-datatable .p-paginator .p-paginator-pages .p-paginator-page{min-width:30px;height:30px;padding:0 6px;border-radius:6px}
+.p-datatable .p-paginator .p-paginator-first,.p-datatable .p-paginator .p-paginator-prev,.p-datatable .p-paginator .p-paginator-next,.p-datatable .p-paginator .p-paginator-last{min-width:30px;height:30px;border-radius:6px}
+.p-datatable .p-paginator .p-paginator-rpp-options{margin-right:auto}
+
+/* Responsive */
+@media (max-width: 900px){
+  .app-sidebar{width:72px;min-width:72px}
+  .brand-title{display:none}
+  .content-inner{margin:12px;padding:12px}
+}
+
+/* --- Preserved NavTree / PrimeReact styling (adapted to theme) --- */
+.sm-nav-tree {
+  width: 100%;
+  background: transparent;
+  color: #d4d7da;
+  border-right: none;
+  height: 100%;
+  overflow: auto;
+  font-size: 13px;
+}
+
+.custom-tree .p-tree { background: transparent; border: none }
+.custom-tree .p-tree-container .p-treenode-content { padding: 6px 8px; gap: 8px; border-radius: 6px; line-height: 1.1; min-height: 28px }
+.custom-tree .p-treenode-content:hover { background: rgba(124,134,255,0.06) }
+.custom-tree .p-highlight { background: rgba(124,134,255,0.14) !important; color: #e6eaee !important }
+.custom-tree .p-tree-toggler { display: none; width: 0; margin-right: 0 }
+.custom-tree .p-tree-container .p-treenode-content { padding-left: 8px; }
+.sm-node{display:inline-flex;align-items:center;gap:8px}
+.sm-label{line-height:1.2;letter-spacing:0.2px}
+.sm-icon{width:16px;height:16px;display:inline-block;background-size:contain;background-repeat:no-repeat;background-position:center}
+.sm-collection-icon{background-image:url('/collection.svg')}
+.sm-collection-icon-color{background-image:url('/collection-color.svg')}
+.custom-tree .p-tree-container .p-treenode-children{margin-left:8px;padding-left:6px;border-left:1px solid rgba(255,255,255,0.02)}

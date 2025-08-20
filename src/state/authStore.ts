@@ -1,25 +1,3 @@
-
-
-// import { create } from "zustand"
-
-// export type NoTokenMessage = {
-//   type: "noToken"
-//   reason?: string
-//   [k: string]: any
-// } | null
-
-// export type AuthState = {
-//   noTokenMessage: NoTokenMessage
-//   setNoTokenMessage: (msg: NoTokenMessage) => void
-//   clearNoTokenMessage: () => void
-// }
-
-// export const useAuthStore = create<AuthState>((set) => ({
-//   noTokenMessage: null,
-//   setNoTokenMessage: (msg) => set({ noTokenMessage: msg }),
-//   clearNoTokenMessage: () => set({ noTokenMessage: null }),
-// }))
-
 import { create } from "zustand"
 
 export type NoTokenMessage = {

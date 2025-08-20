@@ -88,16 +88,16 @@ export default function TokenCard({ oidcWorker }: Props) {
           <h2 className="text-lg font-semibold">Access Token</h2>
           <p className="opacity-80">Status: {status}{expAbs !== "—" && token ? ` — expires ${expRel} (${expAbs})` : ""}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="token-actions">
           {token && (
             <>
-              <button className="px-3 py-1 rounded-xl border shadow-sm" onClick={() => setShowFull((s) => !s)}>
+              <button className="token-btn" onClick={() => setShowFull((s) => !s)}>
                 {showFull ? "Hide" : "Reveal"}
               </button>
-              <button className="px-3 py-1 rounded-xl border shadow-sm" onClick={onCopy} disabled={!token}>
+              <button className="token-btn" onClick={onCopy} disabled={!token}>
                 {copyOk === "ok" ? "Copied" : copyOk === "err" ? "Error" : "Copy"}
               </button>
-              <button className="px-3 py-1 rounded-xl border shadow-sm" onClick={onLogout}>Logout</button>
+              <button className="token-btn" onClick={onLogout}>Logout</button>
             </>
           )}
         </div>

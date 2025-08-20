@@ -5,6 +5,7 @@ import './styles.css'
 import App from "./App"
 import { bootstrap } from "./auth/bootstrap"
 import { installGlobalOAuthEnv } from './env'
+
 const qc = new QueryClient()
 
 async function start() {

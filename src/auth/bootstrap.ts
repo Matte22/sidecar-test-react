@@ -28,7 +28,6 @@ export async function bootstrap(): Promise<BootResult> {
   const url = new URL(window.location.href)
   const redirectUri = `${url.origin}${url.pathname}`
   const env =(window as any).STIGMAN?.Env?.oauth ?? (globalThis as any).STIGMAN?.Env?.oauth
-  console.log("OIDC Bootstrap with redirectUri:", redirectUri, "and env:", env)
   const response = await OW.sendWorkerRequest({
     request: "initialize",
     redirectUri,
