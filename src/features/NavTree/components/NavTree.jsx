@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useCallback } from "react"
 import { Tree } from "primereact/tree"
 import { useNavTreeCollections } from "../hooks/useNavTreeCollections"
 
@@ -13,7 +13,18 @@ export default function NavTree({onSelectedDataChange }) {
   }, [selectionKeys, nodes, onSelectedDataChange])
 
 
+  // dont update value unless  nodes change
   const value = useMemo(() => nodes, [nodes])
+
+  const renderNode = useCallback((node) => (
+    <span className="sm-node">
+      {node.icon ? <span className={`sm-icon ${node.icon}`} /> : null}
+      <span className="sm-label">{node.label}</span>
+    </span>
+  ), [])
+
+  const handleSelectionChange = useCallback((e) => setSelectionKeys(e.value), [])
+  const handleToggle = useCallback((e) => setExpandedKeys(e.value), [])
 
   return (
     <aside className="sm-nav-tree">
@@ -22,15 +33,10 @@ export default function NavTree({onSelectedDataChange }) {
         loading={loading}
         selectionMode="single"
         selectionKeys={selectionKeys}
-        onSelectionChange={(e) => setSelectionKeys(e.value)}
+        onSelectionChange={handleSelectionChange}
         expandedKeys={expandedKeys}
-        onToggle={(e) => setExpandedKeys(e.value)}
-        nodeTemplate={(node) => (
-          <span className="sm-node">
-            {node.icon ? <span className={`sm-icon ${node.icon}`} /> : null}
-            <span className="sm-label">{node.label}</span>
-          </span>
-        )}
+        onToggle={handleToggle}
+        nodeTemplate={renderNode}
         className="p-tree-sm custom-tree"
       />
     </aside>

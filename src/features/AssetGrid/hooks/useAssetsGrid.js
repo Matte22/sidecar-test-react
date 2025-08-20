@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/state/authStore'
 
@@ -91,6 +91,6 @@ export function useAssetGrid({ selectedCollection, apiBase = 'http://localhost:6
     error,
     selectedAsset,
     metaKey,
-    onSelectionChange: (e) => setSelectedAsset(e.value)
+  onSelectionChange: useCallback((e) => setSelectedAsset(e.value), [])
   }
 }

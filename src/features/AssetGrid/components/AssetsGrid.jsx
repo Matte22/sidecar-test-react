@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { useAssetGrid } from '../hooks/useAssetsGrid'
@@ -10,10 +10,6 @@ export const AssetsGrid = ({ selectedData = null }) => {
   const { items, labels, loading, error, selectedAsset, metaKey, onSelectionChange } = useAssetGrid({ 
     selectedCollection: selectedData,
   })
-
-  useEffect(() => {
-    console.log('Selected Data in AssetsGrid:', selectedData)
-  }, [selectedData])
 
   return (
     <div className="space-y-4">
@@ -56,7 +52,7 @@ export const AssetsGrid = ({ selectedData = null }) => {
           <Column
             header="Labels"
             className="w-48"
-            body={(rowData) => {
+            body={useCallback((rowData) => {
               if (!labels || !Array.isArray(rowData.labelIds) || !rowData.labelIds.length) return null
               return (
                 <div className="label-list">
@@ -78,14 +74,14 @@ export const AssetsGrid = ({ selectedData = null }) => {
                   })}
                 </div>
               )
-            }}
+            }, [labels])}
           />
           <Column field="fqdn" header="FQDN" sortable />
           <Column field="ip" header="IP" sortable className="w-36" />
           <Column
             header="Benchmarks"
             className="w-48"
-            body={(rowData) => {
+            body={useCallback((rowData) => {
               if (!Array.isArray(rowData.stigs) || !rowData.stigs.length) return null
               return (
                 <span>
@@ -97,7 +93,7 @@ export const AssetsGrid = ({ selectedData = null }) => {
                   ))}
                 </span>
               )
-            }}
+            }, [])}
           />
         </DataTable>
       </div>
